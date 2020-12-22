@@ -1,0 +1,19 @@
+<h1>Page de connexion</h1>
+
+<form [formGroup]="userForm" (ngSubmit)="signin()">
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input type="email" matInput formControlName="email">
+    <mat-error *ngIf="this.emailControl.hasError('required')">L'email est obligatoire</mat-error>
+    <mat-error *ngIf="this.emailControl.hasError('email') && !this.emailControl.hasError('required')">L'email n'est pas valide</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Mot de passe</mat-label>
+    <input type="password" matInput formControlName="password">
+    <mat-error *ngIf="this.passwordControl.hasError('required')">Le mot de passe est obligatoire</mat-error>
+    <mat-error *ngIf="this.passwordControl.hasError('minlength') && !this.passwordControl.hasError('required')">Le mot de passe doit faire au moins 6 caractères</mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="accent" type="submit">Envoyer</button>
+</form>
+
+
