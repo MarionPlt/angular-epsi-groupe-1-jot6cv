@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {AuthService} from '../../../core/services/auth.service';
-import {map, tap} from 'rxjs/operators';
+import {Router} from '@angular/router';
+import {SessionService} from '../../../core/services/session.service';
 
 @Component({
   selector: 'app-signin',
@@ -10,7 +11,12 @@ import {map, tap} from 'rxjs/operators';
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private authService: AuthService) { }
+  constructor(private fb: FormBuilder,
+              private authService: AuthService,
+              private router: Router,
+              private sessionService: SessionService) {
+    this.authService.signout(); // supprimer le token au moment où on arrive sur signin, on vire les données
+  }
 
   userForm = this.fb.group(
     {
@@ -35,7 +41,7 @@ export class SigninComponent implements OnInit {
       this.emailControl.value,
       this.passwordControl.value
     ).subscribe((token) => {
-      // console.log('token récupéré', token);
+      this.router.navigate((['dash/home']));
     });
   }
 

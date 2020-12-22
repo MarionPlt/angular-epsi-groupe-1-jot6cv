@@ -13,6 +13,9 @@ import {SessionService} from './session.service';
 export class AuthService {
 
   static user: User = null;
+  static get isSignedIn(): boolean {
+    return !!AuthService.user;
+  }
 
   constructor(
     private httpClient: HttpClient,
@@ -50,6 +53,9 @@ export class AuthService {
       })
     );
   }
-
+  signout(): void {
+    this.sessionService.clear();
+    AuthService.user = null;
+  }
 
 }
