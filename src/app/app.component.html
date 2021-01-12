@@ -12,6 +12,11 @@
    <button *ngIf="isSignedIn"[routerLink]="'auth/signin'"mat-menu-item>
      <span>Se déconnecter</span>
     </button>
+    <span>Se déconnecter</span>
+
+  <button (click)="signout" mat-menu-item>
+    <span>Se déconnecter</span></button>
+
   </mat-menu>
 </nav>
 
