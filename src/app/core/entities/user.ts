@@ -8,7 +8,7 @@ export class User {
   email?: string;
   password?: string;
   tags?: TagInterface[];
-  role?: string[];
+  roles?: string[];
 
   constructor(obj?: any) {
     this.first_name = 'first_name' in obj ? obj.first_name : '';

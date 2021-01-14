@@ -3,6 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } fro
 import {Observable, of} from 'rxjs';
 import {AuthService} from './services/auth.service';
 import {catchError, map} from 'rxjs/operators';
+import {User} from './entities/user';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +31,15 @@ export class CanActivateGuard implements CanActivate {
       }),
 
       // on retourne true ou false en fonction du status ( et donc de la permission )
-      map((response: Response) => {
-        return !(401 === response.status || 403 === response.status);
+      map((response: Response | User) => {
+        if ('status' in response) {
+          return !(401 === response.status || 403 === response.status);
+        } else if ('roles' in response ) {
+          if (!response.roles.includes('ROLE_ADMIN') &&  'admin' in next.data) {
+          return false;
+          }
+          return true;
+        }
       })
     );
   }
