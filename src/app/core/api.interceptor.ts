@@ -8,19 +8,19 @@ import {SessionService} from './services/session.service';
 })
 export class ApiInterceptor implements HttpInterceptor {
 
-  constructor(
-    private sessionService: SessionService
-  ) { }
+  constructor(private sessionService: SessionService) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     const update: { headers?: HttpHeaders } = {};
+
     const token = this.sessionService.getToken();
 
     if (token) {
       update.headers = new HttpHeaders(
         {
-          Authorization: `Bearer ${token}`, // Norme en JWT
+          Authorization: `Bearer ${token}`, // methode d'authentification en JWT
         }
       );
     }
@@ -28,7 +28,25 @@ export class ApiInterceptor implements HttpInterceptor {
     // on clone la requête avec les mises à jours qu'on lui donne
     const clonedRequest: HttpRequest<any> = req.clone(update);
 
-    return next.handle(clonedRequest);
-  }
+    return next.handle(clonedRequest); // on passe la main au prochain interceptor s'il y en a un
 
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

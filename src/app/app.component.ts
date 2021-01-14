@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {AuthService} from './core/services/auth.service';
 import {SessionService} from './core/services/session.service';
+import {AuthService} from './core/services/auth.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -10,20 +10,21 @@ import {Router} from '@angular/router';
 })
 export class AppComponent {
 
-  constructor(private sessionService: SessionService,
-              private router: Router) {}
+  constructor(
+    private sessionService: SessionService,
+    private router: Router
+  ) {}
 
   get isSignedIn(): boolean {
-    // vérifier si l'utilisateur est connecté
     return AuthService.isSignedIn;
-    // return AuthService.user !==null; c'est apreil
   }
-
 
   signout() {
-    // supprimer les données de dessions et retourner à la page de login
-this.sessionService.clear();
-AuthService.user = null;
-this.router.navigate(['/auth/signin']);
+    // supprimer les données de sessions et retourner à la page de login
+    this.router.navigate(['/auth/signin']).then(() => {
+      this.sessionService.clear();
+      AuthService.user = null;
+    });
   }
+
 }
