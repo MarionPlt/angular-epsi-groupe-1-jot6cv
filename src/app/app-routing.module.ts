@@ -10,7 +10,6 @@ const routes: Routes = [
   {
     path: 'dash',
     canActivate: [CanActivateGuard],
-    data: { admin: false},
     loadChildren: () => import('./dash/dash.module').then(mod => mod.DashModule),
   },
   {
