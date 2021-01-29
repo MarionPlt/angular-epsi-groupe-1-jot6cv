@@ -14,7 +14,7 @@ export class SigninComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router,
+    private router: Router
   ) {
   }
 
